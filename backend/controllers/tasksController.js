@@ -22,7 +22,7 @@ exports.createTask = async (req, res) =>{
 
         let task = new Task(req.body);
         await task.save()
-        res.json({ msg: 'Task created' })
+        res.json(task)
     } catch (error) {
         console.log(error);
         res.status(500).send('An error ocurred')
@@ -32,7 +32,7 @@ exports.createTask = async (req, res) =>{
 
 exports.getTasks = async (req, res) =>{
     try {
-        const { userId } = req.body;
+        const { userId } = req.query;
         let userExist = await User.findById(userId);
         if(!userExist){
             return res.status(404).json({ msg: 'User does not exist' });
